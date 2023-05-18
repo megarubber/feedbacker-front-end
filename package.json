@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "tiny-emitter": "^2.1.0",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"
   },
