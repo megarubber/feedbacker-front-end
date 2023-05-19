@@ -9,7 +9,10 @@
           <button class="px-6 py-2 font-bold text-white rounded-full focus:outline-none">
             Create account
           </button>
-          <button class="px-6 py-2 font-bold text-white bg-blue-800 rounded-full focus:outline-none">
+          <button 
+            @click="() => emit('login')"
+            class="px-6 py-2 font-bold text-white bg-blue-800 rounded-full focus:outline-none"
+          >
             Sign in
           </button>
         </div>
@@ -35,7 +38,9 @@
 
 <script>
 export default {
-
+  setup(_, { emit }) {
+    return { emit }
+  }
 }
 </script>
 

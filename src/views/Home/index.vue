@@ -1,5 +1,8 @@
 <template>
-  <CustomHeader />
+  <CustomHeader 
+    @create-account="handleAccountCreate"
+    @login="handleLogin"
+  />
   <Contact />
   <div class="flex justify-center py-10 bg-gray-200">
     <p class="font-medium text-center">feedbacker. All rights reserved</p>
@@ -11,7 +14,7 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Contact from './Contact.vue';
 import CustomHeader from './CustomHeader.vue';
-import useModal from '../../hooks/useModal';
+import useModal from '../../hooks/useModal.js';
 
 export default {
   components: { Contact, CustomHeader },
