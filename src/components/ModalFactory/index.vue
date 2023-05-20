@@ -27,6 +27,9 @@ const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3';
 const ModalLogin = defineAsyncComponent(() => import('../ModalLogin/index.vue'));
 
 export default {
+  components: {
+    ModalLogin
+  },
   setup() {
     const modal = useModal();
     const state = reactive({
