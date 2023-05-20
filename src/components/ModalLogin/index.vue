@@ -62,12 +62,13 @@
       </label>
       <button
         :disabled="state.isLoading"
+				@click=""
         type="submit"
         :class="{
           'opacity-50': state.isLoading
         }"
-        class="bg-blue-800 px-8 py-3 mt-10 text-2xl font-bold text-white rounded-full bg-brand-main focus:outilne-none transition-all duration-150"
-      >
+				class="px-6 py-2 font-bold text-white bg-blue-800 rounded-full focus:outline-none"
+			>
         Login
       </button>
     </form>
@@ -76,13 +77,18 @@
 
 <script>
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import { useField } from 'vee-validate';
+import { useToast } from 'vue-toastification';
 import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators.js';
 import useModal from '../../hooks/useModal.js';
+import services from '../../services';
 export default {
   setup() {
     const modal = useModal();
-
+		const router = useRouter();
+		const toast = useToast();
+		
     const {
       value: emailValue,
       errorMessage: emailErrorMessage
@@ -106,13 +112,44 @@ export default {
       },
     });
 
-    function handleSubmit() {
+    async function handleSubmit() {
+			try {
+				toast.clear();
+				state.isLoading = true;
+				const { data, errors } = await services.auth.login({
+					email: state.email.value,
+					password: state.password.value
+				});
 
+				if(!errors) {
+					window.localStorage.setItem('token', data.token);
+					router.push({ name: 'Feedback' });
+					state.isLoading = false;
+					modal.close();
+					return;
+				}
+
+				switch(errors.status) {
+					case 404:
+						toast.error('E-mail was not founded');
+					case 401:
+						toast.error('Invalid e-mail or password');
+					case 400:
+						toast.error('Impossible to make login');
+				}
+
+				state.isLoading = false;
+			} catch(error) {
+				console.log(error);
+				state.isLoading = false;
+				state.hasErrors = !!error;
+			}
     }
 
     return {
       state,
-      close: modal.close
+      close: modal.close,
+			handleSubmit
     }
   }
 }
