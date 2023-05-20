@@ -10,7 +10,7 @@
         &times;
       </button>
   </div>
-  <div class="mt-16">
+  <div class="mt-10">
     <form @submit.prevent="handleSubmit">
       <label class="block">
         <span class="text-lg font-medium text-gray-800">E-mail</span>
@@ -23,14 +23,20 @@
           class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
           placeholder="user@email.com"
         >
-        <span 
+        <span
           v-if="!!state.email.errorMessage"
           class="block font-medium text-brand-danger"
         >
           {{ state.email.errorMessage }}
         </span>
+        <span 
+          v-else
+          class="block font-medium text-brand-danger select-none"
+        >
+          &nbsp
+        </span>
       </label>
-      <label class="block">
+      <label class="block mt-5">
         <span class="text-lg font-medium text-gray-800">Password</span>
         <input
           v-model="state.password.value"
@@ -39,13 +45,19 @@
             'border-brand-danger': !!state.password.errorMessage
           }"
           class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
-          placeholder=""
+          placeholder="More than 3 characters"
         >
         <span 
-          v-if="!!state.email.errorMessage"
+          v-if="!!state.password.errorMessage"
           class="block font-medium text-brand-danger"
         >
-          {{ state.email.errorMessage }}
+          {{ state.password.errorMessage }}
+        </span>
+        <span 
+          v-else
+          class="block font-medium text-brand-danger select-none"
+        >
+          &nbsp
         </span>
       </label>
       <button
@@ -54,9 +66,9 @@
         :class="{
           'opacity-50': state.isLoading
         }"
-        class="px-8 py-3 mt-10 text-2xl font-bold text-white rounded-full bg-brand-main focus:outilne-none transition-all duration-150"
+        class="bg-blue-800 px-8 py-3 mt-10 text-2xl font-bold text-white rounded-full bg-brand-main focus:outilne-none transition-all duration-150"
       >
-        Entrar
+        Login
       </button>
     </form>
   </div>
@@ -64,6 +76,8 @@
 
 <script>
 import { reactive } from 'vue';
+import { useField } from 'vee-validate';
+import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators.js';
 import useModal from '../../hooks/useModal.js';
 export default {
   setup() {
@@ -72,12 +86,12 @@ export default {
     const {
       value: emailValue,
       errorMessage: emailErrorMessage
-    } = useField('email');
+    } = useField('email', validateEmptyAndEmail);
 
     const {
       value: passwordValue,
       errorMessage: passwordErrorMessage
-    } = useField('password');
+    } = useField('password', validateEmptyAndLength3);
 
     const state = reactive({
       hasErrors: false,
