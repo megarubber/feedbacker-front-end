@@ -69,7 +69,8 @@
         }"
 				class="px-6 py-2 font-bold text-white bg-blue-800 rounded-full focus:outline-none"
 			>
-        Login
+				<icon v-if="state.isLoading" name="loading" class="animate-spin"/>
+				<span v-else>Login</span>
       </button>
     </form>
   </div>
@@ -83,7 +84,10 @@ import { useToast } from 'vue-toastification';
 import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators.js';
 import useModal from '../../hooks/useModal.js';
 import services from '../../services';
+import Icon from '../Icon/index.vue';
+
 export default {
+	components: { Icon },
   setup() {
     const modal = useModal();
 		const router = useRouter();
