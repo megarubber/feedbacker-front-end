@@ -6,7 +6,10 @@
           <img class="w-full" src="../../assets/images/logo.png" alt="logo">
         </div>
         <div class="flex">
-          <button class="px-6 py-2 font-bold text-white rounded-full focus:outline-none">
+          <button 
+						@click="() => emit('create-account')"
+						class="px-6 py-2 font-bold text-white rounded-full focus:outline-none"
+					>
             Create account
           </button>
           <button 
@@ -28,7 +31,10 @@
         </p>
       </div>
       <div>
-        <button class="px-6 py-2 mt-10 font-bold text-white bg-blue-800 rounded-full focus:outline-none">
+        <button 
+					@click="() => emit('create-account')"
+					class="px-6 py-2 mt-10 font-bold text-white bg-blue-800 rounded-full focus:outline-none"
+				>
           Create a new account for free
         </button>
       </div>

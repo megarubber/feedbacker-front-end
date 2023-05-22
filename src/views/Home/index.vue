@@ -1,6 +1,6 @@
 <template>
   <CustomHeader 
-    @create-account="handleAccountCreate"
+    @create-account="handleCreateAccount"
     @login="handleLogin"
   />
   <Contact />
@@ -34,7 +34,7 @@ export default {
       });
     }
 
-    function handleAccountCreate() {
+    function handleCreateAccount() {
       modal.open({
         component: 'ModalCreateAccount'
       });
@@ -42,7 +42,7 @@ export default {
 
     return {
       handleLogin,
-      handleAccountCreate
+      handleCreateAccount
     }
   }
 }
