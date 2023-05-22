@@ -11,7 +11,7 @@
       >
         <div class="flex flex-col overflow-hidden bg-white rounded-lg animate__animated animate__fadeInDown animate__faster">
           <div class="flex flex-col px-12 py-10 bg-white">
-            <component is="ModalLogin" />
+            <component :is="state.component" />
           </div>
         </div>
       </div>
@@ -25,10 +25,12 @@ import useModal from '../../hooks/useModal';
 const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3';
 
 const ModalLogin = defineAsyncComponent(() => import('../ModalLogin/index.vue'));
+const ModalCreateAccount = defineAsyncComponent(() => import('../ModalCreateAccount/index.vue'));
 
 export default {
   components: {
-    ModalLogin
+    ModalLogin,
+    ModalCreateAccount,
   },
   setup() {
     const modal = useModal();
